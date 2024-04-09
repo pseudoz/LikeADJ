@@ -128,6 +128,9 @@ namespace MusicBeePlugin
                 Boolean.TryParse(Plugin.ini.Read("DISABLELOGGING", "HUE"), out flag);
                 CB_DisableLogging.Checked = flag;
 
+                LB_BridgeIP.Visible = false;
+                TB_BridgeIP.Visible = false;
+                BT_ManualBridgeFind.Visible = false;
                 BT_PairHue.Visible = false;
                 BT_ResetHue.Visible = false;
                 BT_ScanLights.Visible = false;
@@ -174,6 +177,9 @@ namespace MusicBeePlugin
                 CB_AllowScanningMessageBox.Checked = false;
                 CB_AllowHue.Checked = false;
                 lblBridgeCnx.Visible = false;
+                LB_BridgeIP.Visible = false;
+                TB_BridgeIP.Visible = false;
+                BT_ManualBridgeFind.Visible = false;
                 BT_PairHue.Visible = false;
                 BT_ResetHue.Visible = false;
                 BT_ScanLights.Visible = false;
@@ -289,27 +295,56 @@ namespace MusicBeePlugin
             client.DownloadStringAsync(new Uri("https://discovery.meethue.com"), null);
             client.Dispose();
         }
-
+        private void BT_ManualBridgeFind_Click(object sender, EventArgs e)
+        {
+            FindBridges();
+        }
         private void Client_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                bridges = jss.Deserialize<List<JSONBridge>>(e.Result);
+                string ip;
+                try
+                {
+                    bridges = jss.Deserialize<List<JSONBridge>>(e.Result);
+                    ip = bridges[0].Internalipaddress;
+                }
+                catch { ip = TB_BridgeIP.Text; }
 
                 WebClient client = new WebClient();
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
-                string descriptionURL = "http://" + bridges[0].Internalipaddress + "/description.xml";
+                string descriptionURL = "http://" + ip + "/description.xml";
                 client.DownloadFileAsync(new Uri(descriptionURL), Plugin.BridgeXmlPath);
-                BT_PairHue.Visible = true;
-                lblBridgeCnx.Visible = true;
-                lblBridgeCnx.Text = "Hue bridge found :)\nClick on the button on your hue and after to 'Pair' button";
                 client.Dispose();
             }
-            catch { lblBridgeCnx.Text = "No Hue bridge found :( !!!\nPlease check you are connected to your network."; }
+            catch 
+            { 
+                lblBridgeCnx.Text = "No Hue bridge found :( !!!\nPlease check you are connected to your network.\nPerhaps you know the Hue brige IP.";
+                LB_BridgeIP.Visible = true;
+                TB_BridgeIP.Visible = true;
+                BT_ManualBridgeFind.Visible = true;
+            }
         }
 
         private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            var file = new FileInfo(Plugin.BridgeXmlPath);
+            if (file.Length == 0 || !file.Exists)
+            {
+                lblBridgeCnx.Text = "No Hue bridge found :( !!!\nPlease check you are connected to your network.\nPerhaps you know the Hue brige IP.";
+                LB_BridgeIP.Visible = true;
+                TB_BridgeIP.Visible = true;
+                BT_ManualBridgeFind.Visible = true;
+            }
+            else
+            {
+                BT_PairHue.Visible = true;
+                LB_BridgeIP.Visible = false;
+                TB_BridgeIP.Visible = false;
+                BT_ManualBridgeFind.Visible = false;
+                lblBridgeCnx.Visible = true;
+                lblBridgeCnx.Text = "Hue bridge found :)\nClick on the button on your hue and after to 'Pair' button";
+            }
             if (CheckForExistingKey()) { InitBridge(); }
         }
 
@@ -556,6 +591,9 @@ namespace MusicBeePlugin
                     }
                     else
                     {
+                        LB_BridgeIP.Visible = false;
+                        TB_BridgeIP.Visible = false;
+                        BT_ManualBridgeFind.Visible = false;
                         BT_PairHue.Visible = false;
                         BT_ResetHue.Visible = false;
                         BT_ScanLights.Visible = false;
@@ -574,6 +612,9 @@ namespace MusicBeePlugin
                 else
                 {
                     lblBridgeCnx.Visible = false;
+                    LB_BridgeIP.Visible = false;
+                    TB_BridgeIP.Visible = false;
+                    BT_ManualBridgeFind.Visible = false;
                     BT_PairHue.Visible = false;
                     BT_ResetHue.Visible = false;
                     BT_ScanLights.Visible = false;

@@ -32,6 +32,9 @@
             this.BT_Cancel = new System.Windows.Forms.Button();
             this.BT_Save = new System.Windows.Forms.Button();
             this.GB_LikeADJSettings = new System.Windows.Forms.GroupBox();
+            this.BT_ManualBridgeFind = new System.Windows.Forms.Button();
+            this.LB_BridgeIP = new System.Windows.Forms.Label();
+            this.TB_BridgeIP = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.CB_AllowLove = new System.Windows.Forms.CheckBox();
             this.LB_CustomTagEnergy = new System.Windows.Forms.Label();
@@ -115,6 +118,9 @@
             // 
             // GB_LikeADJSettings
             // 
+            this.GB_LikeADJSettings.Controls.Add(this.BT_ManualBridgeFind);
+            this.GB_LikeADJSettings.Controls.Add(this.LB_BridgeIP);
+            this.GB_LikeADJSettings.Controls.Add(this.TB_BridgeIP);
             this.GB_LikeADJSettings.Controls.Add(this.groupBox1);
             this.GB_LikeADJSettings.Controls.Add(this.CB_AllowScanningMessageBox);
             this.GB_LikeADJSettings.Controls.Add(this.TB_NumberSongsPlaylist);
@@ -142,6 +148,37 @@
             this.GB_LikeADJSettings.TabIndex = 25;
             this.GB_LikeADJSettings.TabStop = false;
             this.GB_LikeADJSettings.Text = "LikeADJ settings :";
+            // 
+            // BT_ManualBridgeFind
+            // 
+            this.BT_ManualBridgeFind.Location = new System.Drawing.Point(428, 506);
+            this.BT_ManualBridgeFind.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.BT_ManualBridgeFind.Name = "BT_ManualBridgeFind";
+            this.BT_ManualBridgeFind.Size = new System.Drawing.Size(51, 24);
+            this.BT_ManualBridgeFind.TabIndex = 57;
+            this.BT_ManualBridgeFind.Text = "Find";
+            this.BT_ManualBridgeFind.UseVisualStyleBackColor = true;
+            this.BT_ManualBridgeFind.Click += new System.EventHandler(this.BT_ManualBridgeFind_Click);
+            // 
+            // LB_BridgeIP
+            // 
+            this.LB_BridgeIP.AutoSize = true;
+            this.LB_BridgeIP.Location = new System.Drawing.Point(336, 492);
+            this.LB_BridgeIP.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.LB_BridgeIP.Name = "LB_BridgeIP";
+            this.LB_BridgeIP.Size = new System.Drawing.Size(78, 13);
+            this.LB_BridgeIP.TabIndex = 56;
+            this.LB_BridgeIP.Text = "Hue bridge IP :";
+            // 
+            // TB_BridgeIP
+            // 
+            this.TB_BridgeIP.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.TB_BridgeIP.Location = new System.Drawing.Point(339, 510);
+            this.TB_BridgeIP.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.TB_BridgeIP.Name = "TB_BridgeIP";
+            this.TB_BridgeIP.Size = new System.Drawing.Size(81, 13);
+            this.TB_BridgeIP.TabIndex = 55;
+            this.TB_BridgeIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox1
             // 
@@ -744,5 +781,8 @@
         private System.Windows.Forms.CheckBox CB_AllowRatings;
         private System.Windows.Forms.CheckBox CB_AllowInitialKey;
         private System.Windows.Forms.CheckBox CB_AllowBPM;
+        private System.Windows.Forms.Label LB_BridgeIP;
+        private System.Windows.Forms.TextBox TB_BridgeIP;
+        private System.Windows.Forms.Button BT_ManualBridgeFind;
     }
 }
